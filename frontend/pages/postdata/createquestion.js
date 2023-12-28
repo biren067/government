@@ -92,6 +92,12 @@ function CreateQuestion() {
       // Handle the response as needed
       const result = res.data;
       console.log(result);
+      // Clear the form fields on success
+      
+      const sub = formData.get('subject')
+      e.target.reset(); // Reset the form
+      setSubject(sub);
+      // setTopics(formData.get('topic'))
     } catch (error) {
       console.error(error);
     }

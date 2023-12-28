@@ -15,6 +15,6 @@ class QuestionAnswer(models.Model):
     optionC = models.CharField(max_length=200)
     optionD = models.CharField(max_length=200)
     answer = models.CharField(max_length=200)
-    type = models.OneToOneField(Menu, on_delete=models.CASCADE, related_name='qa')
+    type = models.ForeignKey(Menu, on_delete=models.CASCADE, related_name='qa')
     def __str__(self):
         return f'{self.question}-{self.answer}'
