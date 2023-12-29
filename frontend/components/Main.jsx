@@ -13,6 +13,7 @@ const Main = ({subject,topic}) => {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [isLastQuestion, setIsLastQuestion] = useState(0);
   const [answerResult, setAnswerResult] = useState('');
+  const [inputMoveToQuestionValue, setInputMoveToQuestionValue] = useState('');
   useEffect(()=>{
     setCurrentQuestionIndex(0)
   },[subject,topic])
@@ -100,12 +101,30 @@ const Main = ({subject,topic}) => {
     setCurrentQuestionIndex(0);
   };
 
+  const handleMoveToQuestion = (event)=>{
+    
+        if (event.key === 'Enter') {
+          console.log("AFter Enter key::",inputMoveToQuestionValue)
+          const value = parseInt(inputMoveToQuestionValue)-1
+          if (questionData?.length>value)
+           {setCurrentQuestionIndex(value)}
+        }
+  }
+  const handleMoveToQuestionInputChange = (event)=>{
+    console.log("Entering value::",event.target.value)
+    setInputMoveToQuestionValue(event.target.value)
+  }
 
 
   return (
     <div>
         <div className='flex justify-between'>
-      <span>{subject}----{topic}</span><span>Question: {currentQuestionIndex+1} out of {questionData?.length}</span>
+      <span>{subject}----{topic}</span>
+      <div className='flex my-1 gap-2'>
+        <span>Move to Question: <input type='text' className='border border-1 rounded' name='moveToQuestion' size={5} 
+                                        onChange={handleMoveToQuestionInputChange} onKeyDown={handleMoveToQuestion}/></span>
+        <span>Question: {currentQuestionIndex+1} out of {questionData?.length}</span>
+      </div>
       </div>
       {/* <h1>Length:{questionData?.length}</h1> */}
       {/* <button onClick={fetchQuestion}>Fetch Question</button> */}

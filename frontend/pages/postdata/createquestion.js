@@ -75,11 +75,11 @@ function CreateQuestion() {
     }
 
     // Validate Question
-    const explanation = formData.get('explanation');
-    if (!explanation || explanation.trim() === '') {
-      setError('explanation should not be empty.');
-      return;
-    }
+      // const explanation = formData.get('explanation');
+      // if (!explanation || explanation.trim() === '') {
+      //   setError('explanation should not be empty.');
+      //   return;
+      // }
     setError(null); // Clear previous error messages
 
     try {
