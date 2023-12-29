@@ -155,13 +155,13 @@ const Main = () => {
             ) : (
                 <button
                 onClick={handleSaveAndNext}
-                className='bg-blue-500 text-white px-1 py-1 rounded ml-3 my-4'
+                className='bg-blue-500 text-white px-2 py-1 rounded ml-3 my-4'
                 >
                 Save & Next
                 </button>
             )}
             {!isLastQuestion && (
-                <button onClick={handleNext} className='bg-green-500 text-white px-1 py-1 rounded ml-3 my-4'>
+                <button onClick={handleNext} className='bg-blue-500 text-white px-1 py-1 px-2 rounded ml-3 my-4'>
                 Next
                 </button>
             )}
