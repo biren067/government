@@ -12,3 +12,4 @@ class QuestionAnswerSerializer(serializers.Serializer):
     optionC = serializers.CharField(max_length=200)
     optionD = serializers.CharField(max_length=200)
     answer = serializers.CharField(max_length=200)
+    explanation = serializers.CharField(max_length=8000,default='Not Available')

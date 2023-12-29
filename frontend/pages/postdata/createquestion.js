@@ -74,6 +74,12 @@ function CreateQuestion() {
       }
     }
 
+    // Validate Question
+    const explanation = formData.get('explanation');
+    if (!explanation || explanation.trim() === '') {
+      setError('explanation should not be empty.');
+      return;
+    }
     setError(null); // Clear previous error messages
 
     try {
@@ -85,8 +91,9 @@ function CreateQuestion() {
         optionB: formData.get('optionB'),
         optionC: formData.get('optionC'),
         optionD: formData.get('optionD'),
-        // answer: formData.get('answer'),
+        explanation: formData.get('explanation'),
         answer: formData.get(`option${formData.get('answer')}`)
+        
       });
 
       // Handle the response as needed
@@ -167,6 +174,14 @@ function CreateQuestion() {
             </select>
           </div>
         </div>
+         {/* explanation */}
+         <p className='flex '>
+              <label>Explanation</label>
+              <span className='flex'>
+                <textarea cols={50} rows={4} className='' name='explanation'></textarea>
+                
+              </span>
+            </p>
         {error && <div className='text-red-500'>{error}</div>}
         <button type='submit' className='bg-green-500 text-white px-4 py-2 rounded mt-4'>
           Submit

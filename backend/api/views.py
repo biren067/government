@@ -32,6 +32,7 @@ class QuestionAnswerViewSet(viewsets.ModelViewSet):
         optionC = request.data.get('optionC')
         optionD = request.data.get('optionD')
         answer = request.data.get('answer')
+        explanation = request.data.get('explanation')
         print("Create Question::",request.data)
         qa_instance = QuestionAnswer.objects.create(   question=question,
                                                       optionA=optionA,
@@ -39,6 +40,7 @@ class QuestionAnswerViewSet(viewsets.ModelViewSet):
                                                       optionC=optionC,
                                                       optionD=optionD,
                                                       answer=answer,
+                                                      explanation=explanation,
                                                       type=menu_ob)
         serializer = self.get_serializer(qa_instance)
         return Response(serializer.data, status=201)
