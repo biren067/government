@@ -73,6 +73,9 @@ const Main = ({subject,topic}) => {
     setShowAnswer(true);
 
   };
+  const handlePrevious = ()=>{
+    setCurrentQuestionIndex((prevIndex) => prevIndex - 1);
+  }
   const handleSaveAndNext = () => {
     // Save the answer for the current question (use your save logic)
     // ...
@@ -102,7 +105,7 @@ const Main = ({subject,topic}) => {
   return (
     <div>
         <div className='flex justify-between'>
-      <span>{subject}----{topic}</span><span>Ouestion: {currentQuestionIndex+1} out of {questionData?.length}</span>
+      <span>{subject}----{topic}</span><span>Question: {currentQuestionIndex+1} out of {questionData?.length}</span>
       </div>
       {/* <h1>Length:{questionData?.length}</h1> */}
       {/* <button onClick={fetchQuestion}>Fetch Question</button> */}
@@ -171,12 +174,21 @@ const Main = ({subject,topic}) => {
                 Submit
                 </button>
             ) : (
+                <> { currentQuestionIndex>0 &&
+                <button
+                onClick={handlePrevious}
+                className='bg-blue-500 text-white px-2 py-1 rounded ml-3 my-4'
+                >
+                Previous
+                </button> }
+
                 <button
                 onClick={handleSaveAndNext}
                 className='bg-blue-500 text-white px-2 py-1 rounded ml-3 my-4'
                 >
                 Save & Next
                 </button>
+                </>
             )}
             {!isLastQuestion && (
                 <button onClick={handleNext} className='bg-blue-500 text-white px-1 py-1 px-2 rounded ml-3 my-4'>
