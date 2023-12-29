@@ -45,7 +45,14 @@ class QuestionAnswerViewSet(viewsets.ModelViewSet):
         serializer = self.get_serializer(qa_instance)
         return Response(serializer.data, status=201)
 
-    def list(self, request, *args, **kwargs):
+    def list(self, request, subject,topic):
         queryset = self.filter_queryset(self.get_queryset())
         serializer = self.get_serializer(queryset, many=True)
+        print("Get list: ",subject,topic)
+        # subject = request.data.get('subject')
+        # topic = request.data.get('topic')
+        menu_ob = Menu.objects.filter(Q(subject=subject) & Q(topic=topic)).first()
+        qa_instance = QuestionAnswer.objects.filter(type=menu_ob)
+        # print(":::",qa_instance)
+        serializer = self.get_serializer(qa_instance,many=True)
         return Response(serializer.data)

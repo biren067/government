@@ -2,31 +2,45 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { TiTickOutline } from "react-icons/ti";
 import { ImCross } from "react-icons/im";
+import { useTopic } from '@/context/TopicContext';
 import BaseURL from '@/data/BaseURL';
 
-const Main = () => {
+const Main = ({subject,topic}) => {
+  const { selectedTopic } = useTopic();
   const [questionData, setQuestionData] = useState(null);
   const [selectedOption, setSelectedOption] = useState(null);
   const [showAnswer, setShowAnswer] = useState(false);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [isLastQuestion, setIsLastQuestion] = useState(0);
   const [answerResult, setAnswerResult] = useState('');
+  useEffect(()=>{
+    setCurrentQuestionIndex(0)
+  },[subject,topic])
   useEffect(() => {
     const fetchQuestion = async () => {
       try {
-        const response = await axios.get(`${BaseURL}/api/questionanswer/`);
+        console.log("Selected value::",subject,topic) 
+        // const {s,t} = selectedTopic.split("-");
+        // console.log("subject and topic",s,t)
+        // const response = await axios.get(`${BaseURL}/api/questionanswer/${s}/${t}`);
+        const response = await axios.get(`${BaseURL}/api/questionanswer/${subject}/${topic}`);
         setQuestionData(response.data);
         setShowAnswer(false);
         setSelectedOption(null);
+        const isLastQuestion = currentQuestionIndex === response.data?.length - 1;
+        console.log("isLast",isLastQuestion,"index:",currentQuestionIndex , "Length:",response.data?.length ,"Records:",questionData)
+        console.log("onchanged..")
+        setIsLastQuestion(isLastQuestion)
       } catch (error) {
         console.error('Error fetching question:', error);
       }
     };
 
     fetchQuestion();
-    const isLastQuestion = currentQuestionIndex === questionData?.length - 1;
-    setIsLastQuestion(isLastQuestion)
-  }, [currentQuestionIndex]); 
+    // const isLastQuestion = currentQuestionIndex === questionData?.length - 1;
+    // console.log("isLast",isLastQuestion,"index:",currentQuestionIndex , "Length:",questionData?.length,"Records:",questionData)
+    // setIsLastQuestion(isLastQuestion)
+  }, [currentQuestionIndex,subject,topic]); 
 
   const handleOptionChange = (e) => {
     setSelectedOption(e.target.value);
@@ -87,7 +101,10 @@ const Main = () => {
 
   return (
     <div>
-      <h1>Question and Options</h1>
+        <div className='flex justify-between'>
+      <span>{subject}----{topic}</span><span>Ouestion: {currentQuestionIndex+1} out of {questionData?.length}</span>
+      </div>
+      {/* <h1>Length:{questionData?.length}</h1> */}
       {/* <button onClick={fetchQuestion}>Fetch Question</button> */}
 
       {questionData && questionData.length > 0 && (
@@ -148,6 +165,7 @@ const Main = () => {
             Show Answer
           </button>
             <div>
+                checking::{isLastQuestion}
             {isLastQuestion ? (
                 <button onClick={handleSubmit} className='bg-blue-500 text-white px-1 py-1 rounded ml-3 my-4'>
                 Submit

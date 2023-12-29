@@ -1,11 +1,14 @@
 import BaseURL from '@/data/BaseURL';
 import Link from 'next/link';
-// Menu.js
+import { useTopic } from '@/context/TopicContext';
+import Main from '@/components/Main'
 
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
 const Menu = () => {
+  const {setTopic} = useTopic()
+  const [selectedTopic, setSelectedTopic] = useState(null);
   const [menuData, setMenuData] = useState([]);
 
   useEffect(() => {
@@ -32,21 +35,30 @@ const Menu = () => {
       });
   }, []);
 
+  const handleTopicClick = (topic) => {
+    setSelectedTopic(topic);
+  };
   return (
     <header>
       {/* <h1>{JSON.stringify(menuData)}</h1> */}
       <nav>
         <ul className="menu">
+          <li className='mx-2 px-1'>
+          <Link href={`/`}>
+                       Home
+                      </Link>
+          </li>
           {menuData.map((menuItem, index) => (
             <li key={index} className={`menu-item ${menuItem.topics.length > 0 ? 'submenu' : ''}`}>
               <span>{menuItem.subject}</span>
               {menuItem.topics.length > 0 && (
                 <ul className="submenu-items">
                   {menuItem.topics.map((topic, subIndex) => (
-                    <li className="" key={subIndex}>
-                      <Link href={`/services/${encodeURIComponent(topic)}`}>
+                    // <li className="pointer-mouse" key={subIndex}  onClick={() => setTopic( `${menuItem.subject}-${topic}` )}>
+                    <li className="pointer-mouse" key={subIndex}  onClick={() => handleTopicClick( `${menuItem.subject}-${topic}` )}>
+                      {/* <Link href={`/services/${encodeURIComponent(topic)}`}> */}
                         {topic}
-                      </Link>
+                      {/* </Link> */}
                     </li>
                   ))}
                 </ul>
@@ -55,18 +67,21 @@ const Menu = () => {
           ))}
         </ul>
       </nav>
+      <Main subject={selectedTopic && selectedTopic.split("-")[0]} topic={selectedTopic && selectedTopic.split("-")[1]}/>
       {/* Add styling for the header */}
       <style jsx>{`
         header {
-          background-color: #333;
+          // background-color: #333;
           padding: 1rem;
-          color: white;
+          // color: white;
         }
 
         nav {
+          background-color: #333;
           display: flex;
           justify-content: space-between;
           align-items: center;
+          color:white;
         }
 
         ul {
