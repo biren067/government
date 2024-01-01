@@ -44,7 +44,7 @@ const Menu = () => {
       <nav>
         <ul className="menu">
           <li className='mx-2 px-1'>
-          <Link href={`/`}>
+          <Link href={`/homepage`}>
                        Home
                       </Link>
           </li>

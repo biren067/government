@@ -130,9 +130,9 @@ const Main = ({subject,topic}) => {
       {/* <button onClick={fetchQuestion}>Fetch Question</button> */}
 
       {questionData && questionData.length > 0 && (
-        <div className='my-2 bg-gray-100 text-gray-100  mx-3 border border-blue-700 rounded-t-md '>
-          <p className='text-gray-100 bg-blue-700 border border-blue-700 rounded-t-md'>
-            <span className='mx-1 px-1 font-bold'>Question: {currentQuestionIndex+1}:</span>{questionData[currentQuestionIndex].question}</p>
+        <div className='my-2 bg-gray-100 text-gray-100  mx-3 border border-blue-500 rounded-t-md '>
+          <p className='text-gray-100 bg-blue-500 border border-blue-700 rounded-t-md'>
+            <span className='mx-1 px-1 font-bold'>Q. {currentQuestionIndex+1})&nbsp;</span>{questionData[currentQuestionIndex].question}</p>
           <form className='px-3 text-gray-900 font-semibold'>
             <label>
               <input
